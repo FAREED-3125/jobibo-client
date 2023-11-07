@@ -1,13 +1,24 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Poppins:wght@200;300;500;600;700;800;900&display=swap");
+
+.resCont {
+  @apply w-[95%] md:w-[90%] lg:w-[85%] mx-auto h-full;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.bg-grad {
+  @apply bg-gradient-to-tr from-blue-600 to-purple-500 from-[10%];
+}
+
+.make-center {
+  @apply flex items-center justify-center;
+}
+
+::-webkit-scrollbar {
+  display: none;
+  color: #63ff63;
+}
+body {
+  -webkit-tap-highlight-color: transparent;
 }
