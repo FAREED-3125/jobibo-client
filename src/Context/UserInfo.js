@@ -18,7 +18,8 @@ const handleUserDispatch = (state, action) => {
     case userDispatchOption.Login:
       localStorage.setItem(UserStorage, JSON.stringify(action.payload));
       return action.payload;
-      case userDispatchOption.Logout:
+
+    case userDispatchOption.Logout:
       localStorage.removeItem(UserStorage);
       return {};
   }

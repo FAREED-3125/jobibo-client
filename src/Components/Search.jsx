@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { HiOutlineBriefcase, HiOutlineLocationMarker } from "react-icons/hi";
 import { motion as m } from "framer-motion";
 import { AiFillCloseCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [jobType, setType] = useState([]);
@@ -9,6 +10,7 @@ const Search = () => {
   const [selected, setSelect] = useState(null);
   const [selectedJobs, setSelectedjobs] = useState([]);
   const [selectedcities, setSelectedcities] = useState([]);
+  const navigate = useNavigate();
 
   return (
     <div className="w-screen min-h-[100dvh]">
@@ -28,7 +30,21 @@ const Search = () => {
           <JobType jobType={jobType} setType={setType} />
           <JobMode jobMode={jobMode} setMode={setMode} />
           <MinimumSalary selected={selected} setSelect={setSelect} />
-          <div className="w-full h-[50px] bg-grad make-center  mt-3 text-white font-[600] rounded-md">
+          <div
+            className="w-full h-[50px] bg-grad make-center  mt-3 text-white font-[600] rounded-md"
+            onClick={() => {
+              navigate("/searchresults", {
+                replace: true,
+                state: {
+                  selectedJobs,
+                  selectedcities,
+                  jobType,
+                  jobMode,
+                  selected,
+                },
+              });
+            }}
+          >
             Search Job
           </div>
           {/* search box ends */}
@@ -40,7 +56,7 @@ const Search = () => {
 
 export default Search;
 
-const JobTitle = ({ selectedJobs, setSelectedjobs }) => {
+export const JobTitle = ({ selectedJobs, setSelectedjobs }) => {
   const jobInitial = [
     "Software Engineer",
     "Data Scientist",
@@ -151,7 +167,7 @@ const JobTitle = ({ selectedJobs, setSelectedjobs }) => {
   );
 };
 
-const Loaction = ({ selectedcities, setSelectedcities }) => {
+export const Loaction = ({ selectedcities, setSelectedcities }) => {
   const citiesInIndia = [
     "Mumbai",
     "Delhi",
@@ -263,11 +279,10 @@ const Loaction = ({ selectedcities, setSelectedcities }) => {
   );
 };
 
-const JobMode = ({ jobMode, setMode }) => {
+export const JobMode = ({ jobMode, setMode }) => {
   const selectTheme = {
-    color: "rgb(34 197 94)",
-    backgroundColor: "rgb(220 252 231)",
-    border: "1px solid rgb(34 197 94)",
+    color: "white",
+    backgroundColor: "rgb(59 130 246)",
   };
   return (
     <div className="w-full ">
@@ -281,26 +296,26 @@ const JobMode = ({ jobMode, setMode }) => {
         <div
           className="px-4 py-3 text-blue-500 text-[15px] bg-blue-50 w-max rounded-full border-[1px] border-blue-400"
           onClick={() => {
-            if (jobMode.includes("on-site")) {
-              setMode(jobMode.filter((job) => job !== "on-site"));
+            if (jobMode.includes("In-office")) {
+              setMode(jobMode.filter((job) => job !== "In-office"));
             } else {
-              setMode((ps) => [...ps, "on-site"]);
+              setMode((ps) => [...ps, "In-office"]);
             }
           }}
-          style={jobMode.includes("on-site") ? selectTheme : {}}
+          style={jobMode.includes("In-office") ? selectTheme : {}}
         >
           on site
         </div>
         <div
           className="px-4 py-3 text-blue-500 text-[15px] bg-blue-50 w-max rounded-full border-[1px] border-blue-400"
           onClick={() => {
-            if (jobMode.includes("work")) {
-              setMode(jobMode.filter((job) => job !== "work"));
+            if (jobMode.includes("Work from home")) {
+              setMode(jobMode.filter((job) => job !== "Work from home"));
             } else {
-              setMode((ps) => [...ps, "work"]);
+              setMode((ps) => [...ps, "Work from home"]);
             }
           }}
-          style={jobMode.includes("work") ? selectTheme : {}}
+          style={jobMode.includes("Work from home") ? selectTheme : {}}
         >
           work from home
         </div>
@@ -309,11 +324,10 @@ const JobMode = ({ jobMode, setMode }) => {
   );
 };
 
-const JobType = ({ jobType, setType }) => {
+export const JobType = ({ jobType, setType }) => {
   const selectTheme = {
-    color: "rgb(34 197 94)",
-    backgroundColor: "rgb(220 252 231)",
-    border: "1px solid rgb(34 197 94)",
+    color: "white",
+    backgroundColor: "rgb(59 130 246)",
   };
   return (
     <div className="w-full ">
@@ -355,7 +369,7 @@ const JobType = ({ jobType, setType }) => {
   );
 };
 
-const MinimumSalary = ({ selected, setSelect }) => {
+export const MinimumSalary = ({ selected, setSelect }) => {
   const salary = [2000, 4000, 6000, 8000, 10000];
   return (
     <div className="w-full ">
@@ -372,9 +386,8 @@ const MinimumSalary = ({ selected, setSelect }) => {
             className="px-4 py-3 text-blue-500 text-[15px] bg-blue-100 border-[1px] border-blue-500 w-max rounded-full"
             onClick={() => setSelect(salary)}
             style={{
-              color: selected === salary && "rgb(34 197 94)",
-              backgroundColor: selected === salary && "rgb(220 252 231)",
-              border: selected === salary && "1px solid rgb(34 197 94)",
+              color: selected === salary && "white",
+              backgroundColor: selected === salary && "rgb(59 130 246)",
             }}
           >
             {salary}

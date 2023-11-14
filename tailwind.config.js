@@ -7,6 +7,9 @@ module.exports = {
         poppins: "Poppins",
         mont: "Montserrat",
       },
+      width: {
+        "20%": "20%",
+      },
     },
   },
   plugins: [],

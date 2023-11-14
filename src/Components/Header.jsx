@@ -1,26 +1,82 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { UserContext } from "../Context/UserInfo";
+import { NavLink, useNavigate } from "react-router-dom";
+import { UserContext, userDispatchOption } from "../Context/UserInfo";
 import { BsPersonCircle } from "react-icons/bs";
 import { BiLogOutCircle } from "react-icons/bi";
 import { motion as m } from "framer-motion";
 import ManageAccount from "./ManageAccount";
+
 const Header = () => {
   const menus = ["Internships", "Jobs", "Courses", "About", "Help"];
   const { userInfo } = useContext(UserContext);
   const isUserLogged = !userInfo.username ? false : true;
   const [isMenu, setIsmenu] = useState(false);
-  const [manageAccount, setManageAccount] = useState(false);
+  const navigate = useNavigate();
+  const menuNvigate = {
+    0: () => {
+      navigate("/searchresults", {
+        replace: true,
+        state: {
+          selectedJobs: [],
+          selectedcities: [],
+          jobType: ["Internship"],
+          jobMode: [],
+          selected: null,
+        },
+      });
+      window.location.reload();
+    },
+    1: () => {
+      navigate("/searchresults", {
+        replace: true,
+
+        state: {
+          selectedJobs: [],
+          selectedcities: [],
+          jobType: ["Job"],
+          jobMode: [],
+          selected: null,
+        },
+      });
+      window.location.reload();
+    },
+    2: () => {
+      navigate("/searchresults", {
+        state: {
+          selectedJobs: [],
+          selectedcities: [],
+          jobType: ["Internship"],
+          jobMode: [],
+          selected: null,
+        },
+      });
+    },
+    3: () => {
+      navigate("/searchresults", {
+        state: {
+          selectedJobs: [],
+          selectedcities: [],
+          jobType: ["Internship"],
+          jobMode: [],
+          selected: null,
+        },
+      });
+    },
+  };
+
   return (
     <>
       <div className=" w-screen h-[50px] overflow-hidden bg-white border-b-2">
         <div className="resCont flex items-center justify-between">
           {/* heading container starts  */}
-          <div className="h-full w-wax flex items-center justify-center">
+          <NavLink
+            to={"/"}
+            className="h-full w-wax flex items-center justify-center"
+          >
             <h3 className="text-[24px] font-[700] bg-grad bg-clip-text text-transparent">
               Jobibo
             </h3>
-          </div>
+          </NavLink>
           {/* heading container ends */}
 
           {/* signin and menu container starts (smaller screens) */}
@@ -45,11 +101,7 @@ const Header = () => {
               ></m.div>
               <m.div className="w-[60%] mx-auto h-[3px]  bg-gray-500"></m.div>
             </div>
-            <Menu
-              isMenu={isMenu}
-              setIsmenu={setIsmenu}
-              setManageAccount={setManageAccount}
-            />
+            <Menu isMenu={isMenu} setIsmenu={setIsmenu} navigate={navigate} />
           </div>
           {/* signin and menu container ends smaller screens) */}
 
@@ -61,6 +113,7 @@ const Header = () => {
                 <div
                   className="hover:text-blue-500 hover:scale-[1.1] transition-all duration-[.2s] cursor-pointer"
                   key={index}
+                  onClick={() => menuNvigate[index]()}
                 >
                   {menu}
                 </div>
@@ -87,25 +140,24 @@ const Header = () => {
                   <BsPersonCircle />
                 </h3>
                 <p className="text-[13px] text-gray-600">profile</p>
-                <Menu
-                  isMenu={isMenu}
-                  setIsmenu={setIsmenu}
-                  setManageAccount={setManageAccount}
-                />
+                <Menu isMenu={isMenu} setIsmenu={setIsmenu} />
               </div>
             )}
           </div>
           {/* menus and login and signup container ends (big screens) */}
         </div>
       </div>
-      {manageAccount && <ManageAccount setManageAccount={setManageAccount} />}
     </>
   );
 };
-
-const Menu = ({ isMenu, setIsmenu, setManageAccount }) => {
+const Menu = ({ isMenu, setIsmenu }) => {
+  const { userInfo, dispatch } = useContext(UserContext);
+  const navigate = useNavigate();
   return (
     <m.div
+      initial={{
+        scale: 0,
+      }}
       animate={{
         scale: isMenu ? 1 : 0,
       }}
@@ -121,43 +173,86 @@ const Menu = ({ isMenu, setIsmenu, setManageAccount }) => {
         <m.div className="w-[70%] mx-auto h-[3px]  bg-gray-500 rotate-[-45deg] translate-y-[-5px]"></m.div>
       </div>
       {/* Close button (mobile) ends */}
-      <div
+      <NavLink
+        to="/manageaccount"
         className="ring-[1px] ring-gray-300 w-[90%] mx-auto h-[50px] mt-5 rounded-full text-gray-700 make-center gap-2 cursor-pointer"
-        onClick={() => setManageAccount(true)}
       >
         <span className="text-blue-400 text-[20px]">
           <BsPersonCircle />
         </span>{" "}
         manage account
-      </div>
+      </NavLink>
       <div className="w-[80%] mx-auto mt-5 flex items-end flex-col gap-4 text-gray-700 mb-auto">
         <p>My applications</p>
-        <p>Internships</p>
-        <p>jobs</p>
+        <p
+          onClick={() => {
+            navigate("/searchresults", {
+              replace: true,
+
+              state: {
+                selectedJobs: [],
+                selectedcities: [],
+                jobType: ["Internship"],
+                jobMode: [],
+                selected: null,
+              },
+            });
+            window.location.reload();
+          }}
+        >
+          Internships
+        </p>
+        <p
+          onClick={() => {
+            navigate("/searchresults", {
+              replace: true,
+
+              state: {
+                selectedJobs: [],
+                selectedcities: [],
+                jobType: ["Job"],
+                jobMode: [],
+                selected: null,
+              },
+            });
+            window.location.reload();
+          }}
+        >
+          jobs
+        </p>
         <p>Courses</p>
       </div>
-      <div className="bg-red-50 w-[90%] mx-auto h-[50px] mt-5 rounded-full text-red-400 make-center gap-2 mb-5 cursor-pointer">
-        <span className=" text-[20px]">
-          <BiLogOutCircle />
-        </span>{" "}
-        log out
-      </div>
+      {userInfo?.username && (
+        <div
+          className="bg-red-50 w-[90%] mx-auto h-[50px] mt-5 rounded-full text-red-400 make-center gap-2 mb-5 cursor-pointer"
+          onClick={() => {
+            if (window.confirm("are you sure want to logout?")) {
+              dispatch({ type: userDispatchOption.Logout });
+            }
+          }}
+        >
+          <span className=" text-[20px]">
+            <BiLogOutCircle />
+          </span>{" "}
+          log out
+        </div>
+      )}
     </m.div>
   );
 };
 
-const SignIn = () => {
+export const SignIn = () => {
   return (
-    <div className="bg-grad h-full  flex items-center justify-center font-[600] text-white text-[16px] rounded-sm w-full cursor-pointer hover:scale-[1.01] transition-all duration-[.2s] ">
+    <div className="bg-grad h-full  flex items-center justify-center font-[600] text-white text-[16px] rounded-sm w-full cursor-pointer">
       <h3>Log in</h3>
     </div>
   );
 };
 
-const SignUp = () => {
+export const SignUp = () => {
   return (
-    <div className=" ring-1 h-full flex bg-grad items-center justify-center rounded-sm w-full cursor-pointer p-[1px] hover:scale-[1.01] transition-all duration-[.2s] ">
-      <h3 className="w-full h-full bg-white  make-center hover:scale-[1.01] transition-all duration-[.2s]">
+    <div className=" ring-1 h-full flex bg-grad items-center justify-center rounded-sm w-full cursor-pointer p-[1px] ">
+      <h3 className="w-full h-full bg-white  make-center ">
         <span className="bg-grad text-transparent bg-clip-text font-[600] text-[16px] ">
           Sign up
         </span>

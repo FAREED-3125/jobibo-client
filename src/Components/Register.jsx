@@ -10,13 +10,14 @@ import { UserContext, userDispatchOption } from "../Context/UserInfo";
 import { useContext } from "react";
 const Register = () => {
   const [isLogin, setLogin] = useState(false);
+  const navigate = useNavigate();
   return (
     <div className="w-screen h-screen  max-h-[800px] overflow-clip">
       <div className="resCont h-full relative make-center  ">
         {isLogin ? (
-          <Login setLogin={setLogin} />
+          <Login setLogin={setLogin} navigate={navigate} />
         ) : (
-          <SignUp setLogin={setLogin} />
+          <SignUp setLogin={setLogin} navigate={navigate} />
         )}
 
         {/* floating custom designs and pictures starts  */}
@@ -61,7 +62,29 @@ const Register = () => {
   );
 };
 
-const Login = ({ setLogin }) => {
+const Login = ({ setLogin, navigate }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { dispatch } = useContext(UserContext);
+
+  const LoginHandle = () => {
+    axios
+      .post("/User/login", { email, password })
+      .then((result) => {
+        dispatch({
+          type: userDispatchOption.Login,
+          payload: result.data.result,
+        });
+
+        setEmail("");
+        setPassword("");
+        alert("successfully logged in.");
+        navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
   return (
     <div className="bg-white/80 backdrop-blur-[2px] w-full h-full lg:h-[80%] shadow-xl ring-[1px] ring-gray-300 lg:w-[500px] rounded-lg flex items-center justify-center flex-col">
       <h3 className="mb-5 text-[24px] text-gray-600 font-[700]">Log in</h3>
@@ -75,6 +98,8 @@ const Login = ({ setLogin }) => {
         <input
           type="text"
           className="w-full h-[40px] ring-[1px] ring-gray-300 outline-none p-2 text-[15px] font-[300] rounded-md"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
         />
       </div>
       <div className="w-[80%] mx-auto mt-5">
@@ -87,9 +112,14 @@ const Login = ({ setLogin }) => {
         <input
           type="password"
           className="w-full h-[40px] ring-[1px] ring-gray-300 outline-none p-2 text-[15px] font-[300] rounded-md"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
         />
       </div>
-      <div className="w-[80%] mx-auto  h-[50px] bg-grad rounded-md mt-[60px] make-center text-[20px] font-[700] text-white">
+      <div
+        className="w-[80%] mx-auto  h-[50px] bg-grad rounded-md mt-[60px] make-center text-[20px] font-[700] text-white"
+        onClick={LoginHandle}
+      >
         Log in
       </div>
       <p className="text-[13px] text-gray-500 mt-5">
@@ -105,14 +135,13 @@ const Login = ({ setLogin }) => {
   );
 };
 
-const SignUp = ({ setLogin }) => {
+const SignUp = ({ setLogin, navigate }) => {
   const [username, setUsername] = useState("");
   const [password, setPass] = useState("");
   const [email, setEmail] = useState("");
   const { dispatch } = useContext(UserContext);
 
   const handleSignup = async () => {
-    console.log({ username, password, email });
     axios
       .post("User/create", { username, password, email })
       .then((result) => {
@@ -126,6 +155,8 @@ const SignUp = ({ setLogin }) => {
     setUsername("");
     setEmail("");
     setPass("");
+    alert("successfully logged in.");
+    navigate("/", { replace: true });
   };
   return (
     <div className="bg-white/80 backdrop-blur-[2px] w-full h-full lg:h-[80%] shadow-xl ring-[1px] ring-gray-300 lg:w-[500px] rounded-lg flex items-center justify-center flex-col ">
