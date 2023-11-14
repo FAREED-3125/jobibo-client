@@ -7,7 +7,6 @@ import infosys from "../Assets/infosys.png";
 import UseDimension from "../Utils/UseDimension";
 const Partner = () => {
   const images = [zoho, tcs, infosys, google];
-  const innerWidth = UseDimension();
   return (
     <div className="w-screen pt-[50px] text-gray-00 pb-[50px]">
       <div className="resCont">

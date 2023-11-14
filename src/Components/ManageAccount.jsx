@@ -8,6 +8,7 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { GrAddCircle } from "react-icons/gr";
 import { SignIn, SignUp } from "./Header";
 import axios from "axios";
+import { baseUrl } from "../App";
 const MangaeAccContext = createContext();
 const ManageAccount = () => {
   const [accountDetails, setAccount] = useState(true);
@@ -120,7 +121,7 @@ const AccountDetails = () => {
   const toggleRecruiter = () => {
     if (window.confirm("sure,You want to change")) {
       axios
-        .post("/User/useraccounttype/" + userInfo?.UserID, {
+        .post(baseUrl + "/User/useraccounttype/" + userInfo?.UserID, {
           isRecruiter: !userInfo?.isRecruiter,
         })
         .then((result) => {
@@ -256,7 +257,7 @@ const Mycompany = ({ userInfo }) => {
   useEffect(() => {
     const FetchCompany = async () => {
       await axios
-        .get(`/Company/getcompany/${userInfo?.UserID}`)
+        .get(baseUrl + `/Company/getcompany/${userInfo?.UserID}`)
         .then((result) => {
           setCompanyAdded(result.data.result);
         })
@@ -271,7 +272,7 @@ const Mycompany = ({ userInfo }) => {
     setLoading(true);
     if (window.confirm("Do you want to Delete it?")) {
       await axios
-        .delete(`/Company/deletecompany/${id}`)
+        .delete(baseUrl + `/Company/deletecompany/${id}`)
         .then((result) => {
           alert("successfully deleted.");
           const newCompanyArr = CompanysAdded.filter(
@@ -344,7 +345,7 @@ const AddCompany = ({ userInfo }) => {
       formData.append("company_name", companyName);
       await axios
         .post(
-          `/Company/createcompany/${userInfo?.UserID}`,
+          baseUrl + `/Company/createcompany/${userInfo?.UserID}`,
           Object.fromEntries(formData)
         )
         .then((result) => {

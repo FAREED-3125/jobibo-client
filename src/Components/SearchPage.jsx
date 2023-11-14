@@ -11,6 +11,7 @@ import { calculateDayDiffernce } from "./Recomended";
 import { BiEdit } from "react-icons/bi";
 import { AiFillCloseCircle } from "react-icons/ai";
 import UseDimension from "../Utils/UseDimension";
+import { baseUrl } from "../App";
 const SearchPage = () => {
   const location = useLocation();
   const [searchResult, setSearchResult] = useState([]);
@@ -112,7 +113,7 @@ const FilterSearch = ({
 
   const handleJobFetch = () => {
     axios
-      .post("/Search", {
+      .post(baseUrl + "/Search", {
         keyword: selectedJobs,
         type: jobType,
         min: selected,

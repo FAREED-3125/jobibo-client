@@ -3,8 +3,6 @@ import Header from "./Header";
 import Hero from "./Hero";
 import Partner from "./Partner";
 import Recomended from "./Recomended";
-import Cookies from "js-cookie";
-import axios from "axios";
 
 const Home = () => {
   const userAlerted = JSON.parse(localStorage.getItem("alertUser"));

@@ -4,7 +4,6 @@ import { UserContext, userDispatchOption } from "../Context/UserInfo";
 import { BsPersonCircle } from "react-icons/bs";
 import { BiLogOutCircle } from "react-icons/bi";
 import { motion as m } from "framer-motion";
-import ManageAccount from "./ManageAccount";
 
 const Header = () => {
   const menus = ["Internships", "Jobs", "Courses", "About", "Help"];

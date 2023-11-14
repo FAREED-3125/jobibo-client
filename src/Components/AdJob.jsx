@@ -6,6 +6,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { HiOutlineBriefcase } from "react-icons/hi";
 import { UserContext } from "../Context/UserInfo";
 import axios from "axios";
+import { baseUrl } from "../App";
 
 const AdJob = () => {
   const location = useLocation();
@@ -64,7 +65,7 @@ const CompanyJobs = ({ state }) => {
 
   useEffect(() => {
     axios
-      .get(`/Job/getjob/${state?._id}`)
+      .get(baseUrl + `/Job/getjob/${state?._id}`)
       .then((res) => {
         setCompanyAddesJobs(res.data.result);
       })
@@ -234,7 +235,7 @@ const AddJobForm = ({ state }) => {
   const handleAddJob = () => {
     setLoading(true);
     axios
-      .post(`/Job/createjob/${state?._id}`, {
+      .post(baseUrl + `/Job/createjob/${state?._id}`, {
         Job_title,
         job_mode,
         no_of_openings,

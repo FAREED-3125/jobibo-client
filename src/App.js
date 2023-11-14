@@ -13,6 +13,8 @@ import ManageAccount from "./Components/ManageAccount";
 import JobDetails from "./Components/JobDetails";
 import axios from "axios";
 
+export const baseUrl = "https://jobibo-backend.onrender.com/api";
+
 const router = createBrowserRouter([
   {
     path: "/",

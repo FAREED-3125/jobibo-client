@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { HiClock } from "react-icons/hi";
 import UseDimension from "../Utils/UseDimension";
 import { JobDetailsConponent } from "./SearchPage";
+import { baseUrl } from "../App";
 
 export const calculateDayDiffernce = (dateOne, dateTwo) => {
   // Define two date objects
@@ -25,7 +26,7 @@ const Recomended = () => {
     data: productdata,
     loading: productLoading,
     err: producterr,
-  } = UseFetch("/Search/getalljobs?limit=4");
+  } = UseFetch(baseUrl + "/Search/getalljobs?limit=4");
 
   const innerwidth = UseDimension();
 

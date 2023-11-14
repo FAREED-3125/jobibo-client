@@ -5,7 +5,6 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 
 const JobDetails = () => {
   const location = useLocation();
-  const { state } = location;
   const { company_id, ...jobdesc } = location.state;
 
   return (

@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext, userDispatchOption } from "../Context/UserInfo";
 import { useContext } from "react";
+import { baseUrl } from "../App";
 const Register = () => {
   const [isLogin, setLogin] = useState(false);
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ const Login = ({ setLogin, navigate }) => {
 
   const LoginHandle = () => {
     axios
-      .post("/User/login", { email, password })
+      .post(baseUrl + "/User/login", { email, password })
       .then((result) => {
         dispatch({
           type: userDispatchOption.Login,
@@ -143,7 +144,7 @@ const SignUp = ({ setLogin, navigate }) => {
 
   const handleSignup = async () => {
     axios
-      .post("User/create", { username, password, email })
+      .post(baseUrl + "/User/create", { username, password, email })
       .then((result) => {
         dispatch({
           type: userDispatchOption.Login,
