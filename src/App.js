@@ -12,7 +12,7 @@ import AdJob from "./Components/AdJob";
 import ManageAccount from "./Components/ManageAccount";
 import JobDetails from "./Components/JobDetails";
 import AxiosInstance from "./Utils/AxiosInstance";
-export const baseUrl = "http://localhost:5000/api";
+export const baseUrl = "https://jobibo-backend.onrender.com/api";
 
 const router = createBrowserRouter([
   {
