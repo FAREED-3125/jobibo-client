@@ -245,7 +245,9 @@ const CompanyDetails = () => {
           </div>
         </div>
       ) : (
-        <div>hi</div>
+        <div className="w-full h-full make-center text-gray-500">
+          You are not a recruiter.
+        </div>
       )}
     </div>
   );
