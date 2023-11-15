@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UseFetch from "../Utils/UseFetch";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FaRegMoneyBillAlt } from "react-icons/fa";
-import { format } from "date-fns";
-import { HiClock } from "react-icons/hi";
+
 import UseDimension from "../Utils/UseDimension";
 import { JobDetailsConponent } from "./SearchPage";
 import { baseUrl } from "../App";

@@ -5,7 +5,7 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { HiOutlineBriefcase } from "react-icons/hi";
 import { UserContext } from "../Context/UserInfo";
-import axios from "axios";
+import AxiosInstance from '../Utils/AxiosInstance'
 import { baseUrl } from "../App";
 
 const AdJob = () => {
@@ -64,7 +64,7 @@ const CompanyJobs = ({ state }) => {
   const [companyAddedJobs, setCompanyAddesJobs] = useState([]);
 
   useEffect(() => {
-    axios
+    AxiosInstance
       .get(baseUrl + `/Job/getjob/${state?._id}`)
       .then((res) => {
         setCompanyAddesJobs(res.data.result);
@@ -76,7 +76,7 @@ const CompanyJobs = ({ state }) => {
 
   const HandleDeleteJob = (id) => {
     if (window.confirm("Delete Job,Confirmation box")) {
-      axios
+      AxiosInstance
         .delete(`/Job/deletejob/${id}`)
         .then((res) => {
           alert("successfully deleted.");
@@ -234,7 +234,7 @@ const AddJobForm = ({ state }) => {
   //handle add job function
   const handleAddJob = () => {
     setLoading(true);
-    axios
+    AxiosInstance
       .post(baseUrl + `/Job/createjob/${state?._id}`, {
         Job_title,
         job_mode,

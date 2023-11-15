@@ -7,8 +7,9 @@ import { UserContext, userDispatchOption } from "../Context/UserInfo";
 import { BiLogOutCircle } from "react-icons/bi";
 import { GrAddCircle } from "react-icons/gr";
 import { SignIn, SignUp } from "./Header";
-import axios from "axios";
 import { baseUrl } from "../App";
+import AxiosInstance from "../Utils/AxiosInstance";
+
 const MangaeAccContext = createContext();
 const ManageAccount = () => {
   const [accountDetails, setAccount] = useState(true);
@@ -120,10 +121,12 @@ const AccountDetails = () => {
 
   const toggleRecruiter = () => {
     if (window.confirm("sure,You want to change")) {
-      axios
-        .post(baseUrl + "/User/useraccounttype/" + userInfo?.UserID, {
+      AxiosInstance.post(
+        baseUrl + "/User/useraccounttype/" + userInfo?.UserID,
+        {
           isRecruiter: !userInfo?.isRecruiter,
-        })
+        }
+      )
         .then((result) => {
           console.log(result);
           dispatch({ type: userDispatchOption.Logout });
@@ -256,8 +259,9 @@ const Mycompany = ({ userInfo }) => {
   console.log(CompanysAdded);
   useEffect(() => {
     const FetchCompany = async () => {
-      await axios
-        .get(baseUrl + `/Company/getcompany/${userInfo?.UserID}`)
+      await AxiosInstance.get(
+        baseUrl + `/Company/getcompany/${userInfo?.UserID}`
+      )
         .then((result) => {
           setCompanyAdded(result.data.result);
         })
@@ -271,8 +275,7 @@ const Mycompany = ({ userInfo }) => {
   const DeleteCompany = async (id) => {
     setLoading(true);
     if (window.confirm("Do you want to Delete it?")) {
-      await axios
-        .delete(baseUrl + `/Company/deletecompany/${id}`)
+      await AxiosInstance.delete(baseUrl + `/Company/deletecompany/${id}`)
         .then((result) => {
           alert("successfully deleted.");
           const newCompanyArr = CompanysAdded.filter(
@@ -343,11 +346,10 @@ const AddCompany = ({ userInfo }) => {
       formData.append("website", companywebsite);
       formData.append("overview", comnpanyOverview);
       formData.append("company_name", companyName);
-      await axios
-        .post(
-          baseUrl + `/Company/createcompany/${userInfo?.UserID}`,
-          Object.fromEntries(formData)
-        )
+      await AxiosInstance.post(
+        baseUrl + `/Company/createcompany/${userInfo?.UserID}`,
+        Object.fromEntries(formData)
+      )
         .then((result) => {
           alert(result.data.result.status + " ,Adding successfull.");
         })

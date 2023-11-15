@@ -11,8 +11,7 @@ import AddJob from "./Components/AddCompany";
 import AdJob from "./Components/AdJob";
 import ManageAccount from "./Components/ManageAccount";
 import JobDetails from "./Components/JobDetails";
-import axios from "axios";
-
+import AxiosInstance from "./Utils/AxiosInstance";
 export const baseUrl = "https://jobibo-backend.onrender.com/api";
 
 const router = createBrowserRouter([
@@ -62,8 +61,7 @@ const App = () => {
   useEffect(() => {
     console.log(payload?.exp * 1000 < Date.now());
     if (payload?.exp * 1000 < Date.now()) {
-      axios
-        .post("/User/refresh")
+      AxiosInstance.post("/User/refresh")
         .then((res) => console.log(res))
         .catch((err) => {
           console.log(err);

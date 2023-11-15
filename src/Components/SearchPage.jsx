@@ -3,7 +3,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion as m } from "framer-motion";
 import { JobMode, JobTitle, JobType, Loaction, MinimumSalary } from "./Search";
 import Header from "./Header";
-import axios from "axios";
+import AxiosInstance from "../Utils/AxiosInstance";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { HiClock } from "react-icons/hi";
 import { format } from "date-fns";
@@ -112,14 +112,13 @@ const FilterSearch = ({
   const navigate = useNavigate();
 
   const handleJobFetch = () => {
-    axios
-      .post(baseUrl + "/Search", {
-        keyword: selectedJobs,
-        type: jobType,
-        min: selected,
-        mode: jobMode,
-        location: selectedcities,
-      })
+    AxiosInstance.post(baseUrl + "/Search", {
+      keyword: selectedJobs,
+      type: jobType,
+      min: selected,
+      mode: jobMode,
+      location: selectedcities,
+    })
       .then((result) => setSearchResult(result.data.result))
       .catch((err) => console.log(err));
   };

@@ -4,7 +4,7 @@ import mail from "../Assets/mail.png";
 import face from "../Assets/face.png";
 import star from "../Assets/star.png";
 import linkedin from "../Assets/linkedin.png";
-import axios from "axios";
+import AxiosInstance from "../Utils/AxiosInstance";
 import { useNavigate } from "react-router-dom";
 import { UserContext, userDispatchOption } from "../Context/UserInfo";
 import { useContext } from "react";
@@ -69,8 +69,7 @@ const Login = ({ setLogin, navigate }) => {
   const { dispatch } = useContext(UserContext);
 
   const LoginHandle = () => {
-    axios
-      .post(baseUrl + "/User/login", { email, password })
+    AxiosInstance.post(baseUrl + "/User/login", { email, password })
       .then((result) => {
         dispatch({
           type: userDispatchOption.Login,
@@ -83,7 +82,7 @@ const Login = ({ setLogin, navigate }) => {
         navigate("/", { replace: true });
       })
       .catch((err) => {
-        console.log(err.message);
+        console.log(err);
       });
   };
   return (
@@ -143,8 +142,7 @@ const SignUp = ({ setLogin, navigate }) => {
   const { dispatch } = useContext(UserContext);
 
   const handleSignup = async () => {
-    axios
-      .post(baseUrl + "/User/create", { username, password, email })
+    AxiosInstance.post(baseUrl + "/User/create", { username, password, email })
       .then((result) => {
         dispatch({
           type: userDispatchOption.Login,

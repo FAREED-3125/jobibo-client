@@ -4,7 +4,6 @@ import tcs from "../Assets/tcs.png";
 import google from "../Assets/google.png";
 import infosys from "../Assets/infosys.png";
 
-import UseDimension from "../Utils/UseDimension";
 const Partner = () => {
   const images = [zoho, tcs, infosys, google];
   return (
